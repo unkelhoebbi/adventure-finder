@@ -35,8 +35,8 @@ This application is a NestJS-based command line utility that sends the current t
 
    You need to set up the following environment variables:
     - `OPENAI_API_KEY`: Your OpenAI API key for accessing ChatGPT.
-    - `PHONE_NUMBER`: The WhatsApp number where the message will be sent.
-    - `CALL_ME_BOT_API_KEY`: Your CallMeBot API key for sending WhatsApp messages.
+    - `PHONE_NUMBERS`: The WhatsApp numbers where the message will be sent (seperated by a comma).
+    - `CALL_ME_BOT_API_KEYS`: Your CallMeBot API keys for sending WhatsApp messages (seperated by a comma).
 
    These can be set in a `.env` file in your project root or configured as secrets in your GitHub repository for GitHub Actions.
 
@@ -71,6 +71,6 @@ The GitHub Action `Run NestJS Command` is configured to automate the execution o
 2. **Set up Node.js**: Node.js is set up with the specified version (21), ensuring compatibility.
 3. **Install Dependencies**: All project dependencies are installed using `npm ci` for a clean installation.
 4. **Build the Project**: The project is built using `npm run build`, compiling the TypeScript code.
-5. **Run NestJS Command**: The `generate-ice-bath-message` command is executed with necessary environment variables (`OPENAI_API_KEY`, `PHONE_NUMBER`, `CALL_ME_BOT_API_KEY`) provided from the repository's secrets.
+5. **Run NestJS Command**: The `generate-ice-bath-message` command is executed with necessary environment variables (`OPENAI_API_KEY`, `PHONE_NUMBERS`, `CALL_ME_BOT_API_KEYS`) provided from the repository's secrets.
 
 This GitHub Action ensures that the application can automatically send out messages based on the schedule or code updates, keeping the information flow automated and up-to-date.

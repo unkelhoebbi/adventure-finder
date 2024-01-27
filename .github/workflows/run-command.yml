@@ -31,6 +31,6 @@ jobs:
       - name: Run NestJS Command
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
-          CALL_ME_BOT_API_KEY: ${{ secrets.CALL_ME_BOT_API_KEY }}
+          PHONE_NUMBERS: ${{ secrets.PHONE_NUMBERS }}
+          CALL_ME_BOT_API_KEYS: ${{ secrets.CALL_ME_BOT_API_KEYS }}
         run: npm run start:prod -- generate-ice-bath-message
