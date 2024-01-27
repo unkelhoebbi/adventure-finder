@@ -1,73 +1,76 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Adventure Finder
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This application is a NestJS-based command line utility that sends the current temperature of the Limmat river in Zurich along with an encouraging message in German to a specified WhatsApp number. The temperature data is fetched from [HydroProWeb](https://hydroproweb.zh.ch/Listen/AktuelleWerte/AktWassertemp.html), and the encouraging message is generated using ChatGPT, powered by OpenAI.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Fetches the current water temperature of the Limmat river in Zurich.
+- Generates an encouraging message in German using ChatGPT.
+- Sends the combined message (temperature + encouraging message) to a specified WhatsApp number.
 
-## Installation
+## Setup and Installation
 
-```bash
-$ npm install
-```
+### Requirements
 
-## Running the app
+- Node.js (Version 21 recommended)
+- A NestJS environment
+- An OpenAI API key for ChatGPT message generation
+- A WhatsApp number and a CallMeBot API key for message sending
 
-```bash
-# development
-$ npm run start
+### Steps
 
-# watch mode
-$ npm run start:dev
+1. **Clone the repository**
 
-# production mode
-$ npm run start:prod
-```
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-## Test
+2. **Install Dependencies**
 
-```bash
-# unit tests
-$ npm run test
+   Run `npm install` to install the required packages.
 
-# e2e tests
-$ npm run test:e2e
+3. **Set Environment Variables**
 
-# test coverage
-$ npm run test:cov
-```
+   You need to set up the following environment variables:
+    - `OPENAI_API_KEY`: Your OpenAI API key for accessing ChatGPT.
+    - `PHONE_NUMBER`: The WhatsApp number where the message will be sent.
+    - `CALL_ME_BOT_API_KEY`: Your CallMeBot API key for sending WhatsApp messages.
 
-## Support
+   These can be set in a `.env` file in your project root or configured as secrets in your GitHub repository for GitHub Actions.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+4. **Build the Project**
 
-## Stay in touch
+   Compile the TypeScript source code to JavaScript using NestJS CLI:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+   ```bash
+   npm run build
+   ```
 
-## License
+5. **Run the Command**
 
-Nest is [MIT licensed](LICENSE).
+   Execute the command to send the WhatsApp message:
+
+   ```bash
+   npm run start:prod -- generate-ice-bath-message
+   ```
+
+## GitHub Action: Automated Message Dispatch
+
+The GitHub Action `Run NestJS Command` is configured to automate the execution of the `generate-ice-bath-message` command under certain conditions.
+
+### Trigger Conditions
+
+- **On Push/Pull Request to Main Branch**: The action is triggered whenever code is pushed to the main branch or a pull request is made against it.
+- **Scheduled Runs**: Additionally, the command is scheduled to run automatically at 09:00 UTC every day.
+
+### Jobs and Steps
+
+1. **Checkout**: The latest code is checked out from the main branch.
+2. **Set up Node.js**: Node.js is set up with the specified version (21), ensuring compatibility.
+3. **Install Dependencies**: All project dependencies are installed using `npm ci` for a clean installation.
+4. **Build the Project**: The project is built using `npm run build`, compiling the TypeScript code.
+5. **Run NestJS Command**: The `generate-ice-bath-message` command is executed with necessary environment variables (`OPENAI_API_KEY`, `PHONE_NUMBER`, `CALL_ME_BOT_API_KEY`) provided from the repository's secrets.
+
+This GitHub Action ensures that the application can automatically send out messages based on the schedule or code updates, keeping the information flow automated and up-to-date.
