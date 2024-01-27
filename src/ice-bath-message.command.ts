@@ -1,8 +1,8 @@
 import { Command, CommandRunner } from 'nest-commander';
 import { TemperatureService } from './temperature.service';
-import { WhatsappService } from './whatsapp.service';
+import { WhatsappService } from './messenger/whatsapp.service';
 import { OpenAiService } from './open-ai.service';
-import { createMessage } from './message.util';
+import { createMessage } from './messenger/message.util';
 import { Logger } from '@nestjs/common';
 
 @Command({
