@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
-import { TemperatureService } from './temperature.service';
-import { WhatsappService } from './whatsapp.service';
-import { IceBathMessageCommand } from './ice-bath-message.command';
-import { OpenAiService } from './open-ai.service';
+import { TemperatureService } from './data-collectors/temperature.service';
+import { WhatsappService } from './messenger/whatsapp.service';
+import { IceBathMessageCommand } from './commands/ice-bath-message.command';
+import { OpenAiService } from './open-ai/open-ai.service';
+import { AdventureCommand } from './commands/adventure.command';
 
 @Module({
   imports: [ConfigModule.forRoot()],
   controllers: [],
   providers: [
-    AppService,
     TemperatureService,
     WhatsappService,
     {
@@ -24,8 +23,9 @@ import { OpenAiService } from './open-ai.service';
       inject: [ConfigService],
     },
     IceBathMessageCommand,
+    AdventureCommand,
     OpenAiService,
   ],
-  exports: [IceBathMessageCommand],
+  exports: [IceBathMessageCommand, AdventureCommand],
 })
 export class AppModule {}

@@ -24,7 +24,7 @@ export class WhatsappService {
 
     const sendMessagesPromises = phoneNumbers.map((phoneNumber, index) => {
       const apiKey = apiKeys[index];
-      const url = `${this.HOST}?phone=${phoneNumber}&text=${message}&apikey=${apiKey}`;
+      const url = `${this.HOST}?phone=${phoneNumber}&text=${encodeURI(message)}&apikey=${apiKey}`;
       return axios.get(url).catch((error) => {
         this.logger.error(
           `Failed to send message to ${phoneNumber.slice(-2)}: ${error.message}`,
